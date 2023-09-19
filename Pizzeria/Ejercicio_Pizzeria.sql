@@ -1,0 +1,4 @@
+/*Llista quants productes de tipus “Begudes” s'han venut en una determinada localitat.*/
+SELECT localidad, SUM(numero_productos), producto FROM pizzeria.tienda INNER JOIN pizzeria.comanda ON pizzeria.comanda.tienda_idtienda=pizzeria.tienda.idtienda INNER JOIN pizzeria.comanda_has_productos ON pizzeria.comanda_has_productos.comanda_idcomanda=pizzeria.comanda.idcomanda INNER JOIN pizzeria.productos ON pizzeria.productos.idproductos=pizzeria.comanda_has_productos.productos_idproductos WHERE (localidad='Barcelona') AND (producto='bebida');
+/*Llista quantes comandes ha efectuat un determinat empleat/da.*/
+SELECT COUNT(idcomanda), nombre FROM pizzeria.comanda INNER JOIN pizzeria.reparto ON pizzeria.reparto.comanda_idcomanda=pizzeria.comanda.idcomanda INNER JOIN pizzeria.empleados ON pizzeria.empleados.idempleados=pizzeria.reparto.empleados_idempleados WHERE nombre='Sara'; 
