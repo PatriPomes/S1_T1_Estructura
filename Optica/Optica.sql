@@ -27,8 +27,8 @@ DROP TABLE IF EXISTS `clientes`;
 CREATE TABLE `clientes` (
   `idClientes` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
-  `codigo_postal` varchar(45) NOT NULL,
-  `telefono` varchar(45) NOT NULL,
+  `codigo_postal` INT NOT NULL,
+  `telefono` INT NOT NULL,
   `mail` varchar(45) NOT NULL,
   `fecha_registro` date NOT NULL,
   `id_recomendacion` int(11) DEFAULT NULL,
@@ -112,8 +112,8 @@ DROP TABLE IF EXISTS `gafas`;
 CREATE TABLE `gafas` (
   `codigo` int(11) NOT NULL AUTO_INCREMENT,
   `marca` varchar(60) NOT NULL,
-  `grad_derch` varchar(45) DEFAULT NULL,
-  `grad_izq` varchar(45) DEFAULT NULL,
+  `grad_derch` FLOAT(8) NULL,
+  `grad_izq` FLOAT(8) NULL,
   `montura` enum('flotante','pasta','metalica') NOT NULL,
   `color_montura` varchar(45) NOT NULL,
   `color_cris_derch` varchar(45) DEFAULT NULL,
@@ -150,8 +150,8 @@ CREATE TABLE `proveedores` (
   `ciudad` varchar(45) NOT NULL,
   `codigo_postal` int(10) NOT NULL,
   `pais` varchar(45) NOT NULL,
-  `telefono` varchar(45) NOT NULL,
-  `fax` varchar(45) DEFAULT NULL,
+  `telefono` int(10) NOT NULL,
+  `fax` int(10) NOT NULL,
   `nif` varchar(45) NOT NULL,
   PRIMARY KEY (`idProveedores`),
   UNIQUE KEY `nif_UNIQUE` (`nif`)

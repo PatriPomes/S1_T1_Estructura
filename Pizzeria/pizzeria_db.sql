@@ -26,7 +26,7 @@ CREATE TABLE `categoria` (
   `idcategoria` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
   `productos_idproductos` int(11) NOT NULL,
-  PRIMARY KEY (`idcategoria`,`productos_idproductos`),
+  PRIMARY KEY (`idcategoria`),
   KEY `fk_categoria_productos1_idx` (`productos_idproductos`),
   CONSTRAINT `fk_categoria_productos1` FOREIGN KEY (`productos_idproductos`) REFERENCES `productos` (`idproductos`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -115,6 +115,7 @@ DROP TABLE IF EXISTS `comanda_has_productos`;
 CREATE TABLE `comanda_has_productos` (
   `comanda_idcomanda` int(11) NOT NULL,
   `productos_idproductos` int(11) NOT NULL,
+  `cantidad_productos` int(11) DEFAULT NULL,
   PRIMARY KEY (`comanda_idcomanda`,`productos_idproductos`),
   KEY `fk_comanda_has_productos_productos1_idx` (`productos_idproductos`),
   KEY `fk_comanda_has_productos_comanda1_idx` (`comanda_idcomanda`),
@@ -129,7 +130,7 @@ CREATE TABLE `comanda_has_productos` (
 
 LOCK TABLES `comanda_has_productos` WRITE;
 /*!40000 ALTER TABLE `comanda_has_productos` DISABLE KEYS */;
-INSERT INTO `comanda_has_productos` VALUES (1,1),(1,5),(1,8),(2,2),(2,4),(3,2);
+INSERT INTO `comanda_has_productos` VALUES (1,1,5),(1,5,2),(1,8,3),(2,2,1),(2,4,1),(3,2,2);
 /*!40000 ALTER TABLE `comanda_has_productos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -261,4 +262,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-19 22:41:14
+-- Dump completed on 2023-10-13 11:43:05

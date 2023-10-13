@@ -112,6 +112,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `Pizzeria`.`comanda_has_productos` (
   `comanda_idcomanda` INT NOT NULL,
   `productos_idproductos` INT NOT NULL,
+  `cantidad_productos` INT NULL,
   PRIMARY KEY (`comanda_idcomanda`, `productos_idproductos`),
   INDEX `fk_comanda_has_productos_productos1_idx` (`productos_idproductos` ASC) ,
   INDEX `fk_comanda_has_productos_comanda1_idx` (`comanda_idcomanda` ASC) ,
@@ -162,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `Pizzeria`.`categoria` (
   `idcategoria` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
   `productos_idproductos` INT NOT NULL,
-  PRIMARY KEY (`idcategoria`, `productos_idproductos`),
+  PRIMARY KEY (`idcategoria`),
   INDEX `fk_categoria_productos1_idx` (`productos_idproductos` ASC) ,
   CONSTRAINT `fk_categoria_productos1`
     FOREIGN KEY (`productos_idproductos`)

@@ -12,6 +12,9 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Schema Optica
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `Optica` DEFAULT CHARACTER SET utf8 ;
+-- -----------------------------------------------------
+-- Schema optica
+-- -----------------------------------------------------
 USE `Optica` ;
 
 -- -----------------------------------------------------
@@ -24,11 +27,11 @@ CREATE TABLE IF NOT EXISTS `Optica`.`Proveedores` (
   `ciudad` VARCHAR(45) NOT NULL,
   `codigo_postal` INT(10) NOT NULL,
   `pais` VARCHAR(45) NOT NULL,
-  `telefono` VARCHAR(45) NOT NULL,
-  `fax` VARCHAR(45) NULL,
-  `nif` VARCHAR(45) NOT NULL,
+  `telefono` INT NOT NULL,
+  `fax` INT NULL,
+  `nif` INT NOT NULL,
   PRIMARY KEY (`idProveedores`),
-  UNIQUE INDEX `nif_UNIQUE` (`nif` ASC))
+  UNIQUE INDEX `nif_UNIQUE` (`nif` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -38,8 +41,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `Optica`.`gafas` (
   `codigo` INT NOT NULL AUTO_INCREMENT,
   `marca` VARCHAR(60) NOT NULL,
-  `grad_derch` VARCHAR(45) NULL,
-  `grad_izq` VARCHAR(45) NULL,
+  `grad_derch` FLOAT(8) NULL,
+  `grad_izq` FLOAT(8) NULL,
   `montura` ENUM('flotante', 'pasta', 'metalica') NOT NULL,
   `color_montura` VARCHAR(45) NOT NULL,
   `color_cris_derch` VARCHAR(45) NULL,
@@ -47,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `Optica`.`gafas` (
   `precio` DOUBLE NOT NULL,
   `Proveedores_idProveedores` INT NOT NULL,
   PRIMARY KEY (`codigo`),
-  INDEX `fk_gafas_Proveedores1_idx` (`Proveedores_idProveedores` ASC) ,
+  INDEX `fk_gafas_Proveedores1_idx` (`Proveedores_idProveedores` ASC) VISIBLE,
   CONSTRAINT `fk_gafas_Proveedores1`
     FOREIGN KEY (`Proveedores_idProveedores`)
     REFERENCES `Optica`.`Proveedores` (`idProveedores`)
@@ -62,12 +65,19 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `Optica`.`Clientes` (
   `idClientes` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
-  `codigo_postal` VARCHAR(45) NOT NULL,
-  `telefono` VARCHAR(45) NOT NULL,
+  `codigo_postal` INT NOT NULL,
+  `telefono` INT NOT NULL,
   `mail` VARCHAR(45) NOT NULL,
   `fecha_registro` DATE NOT NULL,
   `id_recomendacion` INT NULL DEFAULT NULL,
-  PRIMARY KEY (`idClientes`))
+  `Clientes_idClientes` INT NOT NULL,
+  PRIMARY KEY (`idClientes`),
+  INDEX `fk_Clientes_Clientes1_idx` (`Clientes_idClientes` ASC) VISIBLE,
+  CONSTRAINT `fk_Clientes_Clientes1`
+    FOREIGN KEY (`Clientes_idClientes`)
+    REFERENCES `Optica`.`Clientes` (`idClientes`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -90,9 +100,9 @@ CREATE TABLE IF NOT EXISTS `Optica`.`compras` (
   `fecha_compra` DATE NOT NULL,
   `Empleado_idEmpleado` INT NOT NULL,
   PRIMARY KEY (`Clientes_idClientes`, `gafas_codigo`, `Empleado_idEmpleado`),
-  INDEX `fk_Clientes_has_gafas_gafas1_idx` (`gafas_codigo` ASC) ,
-  INDEX `fk_Clientes_has_gafas_Clientes1_idx` (`Clientes_idClientes` ASC) ,
-  INDEX `fk_compras_Empleado1_idx` (`Empleado_idEmpleado` ASC) ,
+  INDEX `fk_Clientes_has_gafas_gafas1_idx` (`gafas_codigo` ASC) VISIBLE,
+  INDEX `fk_Clientes_has_gafas_Clientes1_idx` (`Clientes_idClientes` ASC) VISIBLE,
+  INDEX `fk_compras_Empleado1_idx` (`Empleado_idEmpleado` ASC) VISIBLE,
   CONSTRAINT `fk_Clientes_has_gafas_Clientes1`
     FOREIGN KEY (`Clientes_idClientes`)
     REFERENCES `Optica`.`Clientes` (`idClientes`)
